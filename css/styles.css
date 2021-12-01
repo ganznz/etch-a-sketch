@@ -1,0 +1,32 @@
+* {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(230, 230, 230);
+}
+
+.drawing-pad-container {
+    height: 500px;
+    width: 500px;
+    background: rgb(255, 255, 255);
+    filter: drop-shadow(2px 2px 3px rgb(180, 180, 180));
+    transition: 0.3s;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.drawing-pad-container:hover {
+    filter: drop-shadow(4px 4px 6px rgb(180, 180, 180));
+}
+
+.drawing-pad-pixel {
+    border: 1px solid grey;
+}
+
+.drawing-pad-pixel:hover {
+    background-color: grey;
+}
