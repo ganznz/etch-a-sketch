@@ -6,13 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css/styles.css">
-    <script src="js/app.js" defer></script>
+    <!-- <script src="js/app.js" defer></script> -->
 </head>
 <body>
     <h1 class="page-title">Etch-a-Sketch</h1>
-    <input type="number" value="5" min="3" max="80">
-    <button type="button" class="rainbow-mode-button">Rainbow</button>
-    <div class="drawing-pad-container">
+    <input class="grid-size-input" type="number" value="5" min="3" max="80">
+    <div class="middle-content-section">
+        <div class="items">
+            <div class="drawing-pad-container"></div>
+            <div class="settings-container">
+                <button class="grid-toggle-button">Show grid</button>
+                <button class="grid-toggle-button">Hover to draw</button>
+            </div>
+        </div>
     </div>
+    <div class="button-container">
+        <button type="button" class="rainbow-mode-button button">Rainbow</button>
+        <button type="button" class="eraser-mode-button button">Eraser</button>
+        <button type="button" class="clear-button button">Clear</button>
+    </div>
+    <footer>
+        <h3>Made by Ganz</h3>
+        <a href="https://github.com/Lollganz/etch-a-sketch" target="_blank"><img id="github-logo" src="images/GitHub-Mark-120px-plus.png" alt="View Repository"></a>
+    </footer>
 </body>
 </html>
