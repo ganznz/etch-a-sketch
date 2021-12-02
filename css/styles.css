@@ -23,7 +23,3 @@ body {
 .drawing-pad-container:hover {
     filter: drop-shadow(4px 4px 6px rgb(180, 180, 180));
 }
-
-.drawing-pad-square {
-    border: 1px solid grey;
-}
