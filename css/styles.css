@@ -30,16 +30,9 @@ body {
 .middle-content-section {
     margin-top: 50px;
     display: flex;
+    justify-content: center;
     width: 100%;
-    border: 1px solid red;
-}
-
-.items {
-    border: 1px solid green;
-    margin: 0 auto;
-    transform: translateX(100px);
     gap: 50px;
-    display: flex;
 }
 
 .settings-container {
@@ -49,7 +42,7 @@ body {
     justify-content: center;
     align-items: flex-start;
     gap: 20px;
-    border: 1px solid blue;
+    transform: translateX(73px);
 }
 
 .drawing-pad-container {
@@ -62,6 +55,7 @@ body {
     grid-template-rows: repeat(30, 1fr);
     grid-template-columns: repeat(30, 1fr);
     flex: 0 0 auto;
+    transform: translateX(73px);
 }
 
 .drawing-pad-container:hover {
