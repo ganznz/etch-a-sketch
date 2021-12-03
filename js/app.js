@@ -10,8 +10,8 @@ const clearGridButton = document.querySelector(".clear-button");
 
 
 // -- VARIABLES -- //
-drawingMethodVal = true; // hover to draw by default
-
+let holdToDrawVal = false; // hover to draw by default
+let showGridVal = false; // grid hidden by default
 
 
 let gridSizeInputVal = 5;
@@ -36,28 +36,38 @@ const generateGrid = (squaresPerRow, totalSquareAmount) => {
 };
 
 
-const clearGrid = () => {
+const deleteGrid = () => {
     const allGridSquares = document.querySelectorAll(".drawing-pad-container div");
     allGridSquares.forEach(square => {
         square.remove();
     })
 };
 
-// if drawingMethodVal = true
+// if holdToDrawVal = true
 const hoverDrawingMethod = (e) => {
-    e.target.style.backgroundColor = "red";
+    e.target.style.backgroundColor = "rgb(40, 40, 40)";
 }
 
-// if drawingMethodVal = false
-const holdDrawingMethod = (e) => {
-    e.target.style.backgroundColor = "green";
-}
+// changes holdToDrawVal bool value
+toggleDrawMethodButton.addEventListener("click", (e) => {
+    if (holdToDrawVal) {
+        holdToDrawVal = !holdToDrawVal;
+        e.target.textContent = "Hold to draw";
+    } else {
+        holdToDrawVal = !holdToDrawVal;
+        e.target.textContent = "Hover to draw";
+    }
+    deleteGrid();
+    generateGrid(gridSizeInputVal, totalGridSquares);
+    toggleDrawingMethod();
+    toggleShowGrid(e);
+});
 
 const toggleDrawingMethod = () => {
     const allGridSquares = document.querySelectorAll(".drawing-pad-container div");
-    if (drawingMethodVal) {
+    if (!holdToDrawVal) {
         allGridSquares.forEach(square => {
-            square.addEventListener("mouseenter", hoverDrawingMethod)
+            square.addEventListener("mouseenter", hoverDrawingMethod);
         });
     } else {
         gridContainer.addEventListener("mousedown", () => {
@@ -65,7 +75,7 @@ const toggleDrawingMethod = () => {
             allGridSquares.forEach(square => {
                 square.setAttribute("ondragstart", "return false;");
                 square.addEventListener("mouseenter", e => {
-                    e.target.style.backgroundColor = "red";
+                    e.target.style.backgroundColor = "rgb(40, 40, 40)";
                 })
             });
         })
@@ -81,25 +91,39 @@ const toggleDrawingMethod = () => {
     }
 }
 
+const toggleShowGrid = (e) => {
+    const allGridSquares = document.querySelectorAll(".drawing-pad-container div");
 
-// changes drawingMethodVal bool value
-toggleDrawMethodButton.addEventListener("click", (e) => {
-    if (drawingMethodVal) {
-        drawingMethodVal = false;
-        e.target.textContent = "Hover to draw";
-    } else {
-        drawingMethodVal = true;
-        e.target.textContent = "Hold to draw";
+    if (e.target.classList.contains("grid-toggle-button")) {
+        console.log("helo")
+        if (showGridVal === false) { // clicking shows grid
+            showGridVal = !showGridVal;
+            toggleGridButton.textContent = "Hide grid";
+        } else { // clicking hides grid
+            toggleGridButton.textContent = "Show grid";
+            showGridVal = !showGridVal;
+        }
     }
-    clearGrid();
-    generateGrid(gridSizeInputVal, totalGridSquares);
-    toggleDrawingMethod();
-});
+
+    if (showGridVal === true) {
+        allGridSquares.forEach(square => {
+            square.classList.add("drawing-pad-square");
+        })
+    } else {
+        allGridSquares.forEach(square => {
+            square.classList.remove("drawing-pad-square");
+        })
+    }
+}
+
+
+toggleGridButton.addEventListener("click", toggleShowGrid);
 
 
 // generates new grid after clicking "Generate" button
-generateGridButton.addEventListener("click", () => {
-    clearGrid();
+generateGridButton.addEventListener("click", (e) => {
+    deleteGrid();
     generateGrid(gridSizeInputVal, totalGridSquares);
     toggleDrawingMethod();
+    toggleShowGrid(e);
 });
