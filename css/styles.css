@@ -45,6 +45,17 @@ body {
     transform: translateX(73px);
 }
 
+.hover-info-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 300px;
+}
+
+.hover-info-container p {
+    color: rgb(160, 160, 160);
+}
+
 .drawing-pad-container {
     height: 500px;
     width: 500px;

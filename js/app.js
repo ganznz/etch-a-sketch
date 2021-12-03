@@ -11,7 +11,7 @@ const clearGridButton = document.querySelector(".clear-button");
 
 // -- VARIABLES -- //
 let holdToDrawVal = false; // hover to draw by default
-let showGridVal = false; // grid hidden by default
+let showGridVal = true; // grid hidden by default
 
 
 let gridSizeInputVal = 5;
@@ -71,7 +71,6 @@ const toggleDrawingMethod = () => {
         });
     } else {
         gridContainer.addEventListener("mousedown", () => {
-            console.log("mouse down");
             allGridSquares.forEach(square => {
                 square.setAttribute("ondragstart", "return false;");
                 square.addEventListener("mouseenter", e => {
@@ -80,7 +79,6 @@ const toggleDrawingMethod = () => {
             });
         })
         gridContainer.addEventListener("mouseup", () => {
-            console.log("mouse up");
             allGridSquares.forEach(square => {
                 const bgColor = square.style.backgroundColor;
                 square.addEventListener("mouseenter", e => {
@@ -116,8 +114,16 @@ const toggleShowGrid = (e) => {
     }
 }
 
-
 toggleGridButton.addEventListener("click", toggleShowGrid);
+
+// repaints every square in the grid to white (original colour)
+clearGridButton.addEventListener("click", (e) => {
+    console.log('helo')
+    const allGridSquares = document.querySelectorAll(".drawing-pad-container div");
+    allGridSquares.forEach(square => {
+        square.removeAttribute("style", "background-color");
+    })
+})
 
 
 // generates new grid after clicking "Generate" button
