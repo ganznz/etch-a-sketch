@@ -96,8 +96,8 @@ body {
 }
 
 .drawing-pad-container {
-    height: 500px;
-    width: 500px;
+    height: 450px;
+    width: 450px;
     background: rgb(255, 255, 255);
     filter: drop-shadow(1px 1px 2px rgb(180, 180, 180));
     transition: 0.3s;
