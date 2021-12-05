@@ -4,30 +4,31 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>DRAW SOMETHING!</title>
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/app.js" defer></script>
 </head>
 <body>
-    <h1 class="page-title">Etch-a-Sketch</h1>
+    <h1 class="page-title">DRAW SOMETHING!</h1>
     <div class="generate-grid-container">
         <input class="grid-size-input" type="number" value="5" min="3" max="100">
-        <button class="generate-grid-button">Generate</button>
+        <button class="generate-grid-button activated">Generate</button>
     </div>
     <div class="middle-content-section">
         <div class="drawing-pad-container"></div>
         <div class="settings-container">
-            <button class="grid-toggle-button">Hide grid</button>
+            <button class="grid-toggle-button activated">Show grid</button>
             <div class="hover-info-container">
-                <button class="hover-toggle-button">Hold to draw</button>
-                <p>(resets drawing)</p>
+                <button class="hover-toggle-button not-activated">Hold to draw</button>
+                <p><em>(resets drawing)</em></p>
             </div>
         </div>
     </div>
     <div class="button-container">
-        <button type="button" class="rainbow-mode-button button">Rainbow</button>
-        <button type="button" class="eraser-mode-button button">Eraser</button>
-        <button type="button" class="clear-button button">Clear</button>
+        <input class="colour-input" value="#282828" type="color" id="colour" name="colour">
+        <button type="button" class="rainbow-mode-button button not-activated">Rainbow</button>
+        <button type="button" class="eraser-mode-button button not-activated">Eraser</button>
+        <button type="button" class="clear-button button cant-toggle">Clear</button>
     </div>
     <footer>
         <h3>Made by Ganz</h3>

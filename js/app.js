@@ -4,14 +4,18 @@ const generateGridButton = document.querySelector(".generate-grid-button");
 const gridContainer = document.querySelector(".drawing-pad-container");
 const toggleGridButton = document.querySelector(".grid-toggle-button");
 const toggleDrawMethodButton = document.querySelector(".hover-toggle-button");
+const colourInputButton = document.querySelector(".colour-input");
 const toggleRainbowModeButton = document.querySelector(".rainbow-mode-button");
 const toggleEraserModeButton = document.querySelector(".eraser-mode-button");
 const clearGridButton = document.querySelector(".clear-button");
 
 
 // -- VARIABLES -- //
-let holdToDrawVal = false; // hover to draw by default
+let holdToDrawVal = true; // hover to draw by default
 let showGridVal = true; // grid hidden by default
+let colour = "#282828"; // default colour
+let rainbowMode = false; // off by default
+let eraserMode  = false; // off by default
 
 
 let gridSizeInputVal = 5;
@@ -33,7 +37,7 @@ const generateGrid = (squaresPerRow, totalSquareAmount) => {
 
         gridContainer.appendChild(div);
     };
-};
+}
 
 
 const deleteGrid = () => {
@@ -41,27 +45,77 @@ const deleteGrid = () => {
     allGridSquares.forEach(square => {
         square.remove();
     })
-};
+}
+
+// changes colour value on change
+colourInputButton.addEventListener("change", (e) => {
+    colour = e.target.value;
+    console.log(colour);
+})
+
+toggleRainbowModeButton.addEventListener("click", (e) => {
+    if (rainbowMode) {
+        rainbowMode = !rainbowMode;
+        e.target.classList.remove("activated");
+        e.target.classList.add("not-activated");
+    } else {
+        rainbowMode = !rainbowMode;
+        e.target.classList.remove("not-activated");
+        e.target.classList.add("activated");
+    }
+})
+
+toggleEraserModeButton.addEventListener("click", (e) => {
+    if (eraserMode) {
+        eraserMode = !eraserMode;
+        e.target.classList.remove("activated");
+        e.target.classList.add("not-activated");
+    } else {
+        eraserMode = !eraserMode;
+        e.target.classList.remove("not-activated");
+        e.target.classList.add("activated");
+    }
+})
+
+const toggleRainbowMode = () => {
+    const num1 = Math.floor(Math.random() * 255);
+    const num2 = Math.floor(Math.random() * 255);
+    const num3 = Math.floor(Math.random() * 255);
+
+    return [num1, num2, num3];
+}
+
 
 // if holdToDrawVal = true
 const hoverDrawingMethod = (e) => {
-    e.target.style.backgroundColor = "rgb(40, 40, 40)";
+    if (rainbowMode == false) {
+        e.target.style.backgroundColor = colour;
+    } else {
+        const [num1, num2, num3] = toggleRainbowMode();
+        e.target.style.backgroundColor = `rgb(${num1}, ${num2}, ${num3})`;
+    }
+
+    if (eraserMode) {
+        e.target.style.backgroundColor = "white";
+    }
 }
 
 // changes holdToDrawVal bool value
 toggleDrawMethodButton.addEventListener("click", (e) => {
     if (holdToDrawVal) {
         holdToDrawVal = !holdToDrawVal;
-        e.target.textContent = "Hold to draw";
+        e.target.classList.remove("activated");
+        e.target.classList.add("not-activated");
     } else {
         holdToDrawVal = !holdToDrawVal;
-        e.target.textContent = "Hover to draw";
+        e.target.classList.add("activated");
+        e.target.classList.remove("not-activated");
     }
     deleteGrid();
     generateGrid(gridSizeInputVal, totalGridSquares);
     toggleDrawingMethod();
     toggleShowGrid(e);
-});
+})
 
 const toggleDrawingMethod = () => {
     const allGridSquares = document.querySelectorAll(".drawing-pad-container div");
@@ -74,7 +128,16 @@ const toggleDrawingMethod = () => {
             allGridSquares.forEach(square => {
                 square.setAttribute("ondragstart", "return false;");
                 square.addEventListener("mouseenter", e => {
-                    e.target.style.backgroundColor = "rgb(40, 40, 40)";
+                    if (rainbowMode == false) {
+                        e.target.style.backgroundColor = colour;  
+                    } else {
+                        const [num1, num2, num3] = toggleRainbowMode();
+                        e.target.style.backgroundColor = `rgb(${num1}, ${num2}, ${num3})`;
+                    }
+
+                    if (eraserMode) {
+                        e.target.style.backgroundColor = "white";
+                    }
                 })
             });
         })
@@ -93,24 +156,26 @@ const toggleShowGrid = (e) => {
     const allGridSquares = document.querySelectorAll(".drawing-pad-container div");
 
     if (e.target.classList.contains("grid-toggle-button")) {
-        console.log("helo")
         if (showGridVal === false) { // clicking shows grid
             showGridVal = !showGridVal;
-            toggleGridButton.textContent = "Hide grid";
+            e.target.classList.add("activated");
+            e.target.classList.remove("not-activated");
         } else { // clicking hides grid
             toggleGridButton.textContent = "Show grid";
             showGridVal = !showGridVal;
+            e.target.classList.remove("activated");
+            e.target.classList.add("not-activated");
         }
     }
 
     if (showGridVal === true) {
         allGridSquares.forEach(square => {
             square.classList.add("drawing-pad-square");
-        })
+        });
     } else {
         allGridSquares.forEach(square => {
             square.classList.remove("drawing-pad-square");
-        })
+        });
     }
 }
 
@@ -118,7 +183,6 @@ toggleGridButton.addEventListener("click", toggleShowGrid);
 
 // repaints every square in the grid to white (original colour)
 clearGridButton.addEventListener("click", (e) => {
-    console.log('helo')
     const allGridSquares = document.querySelectorAll(".drawing-pad-container div");
     allGridSquares.forEach(square => {
         square.removeAttribute("style", "background-color");
@@ -132,4 +196,4 @@ generateGridButton.addEventListener("click", (e) => {
     generateGrid(gridSizeInputVal, totalGridSquares);
     toggleDrawingMethod();
     toggleShowGrid(e);
-});
+})
