@@ -21,22 +21,35 @@ let eraserMode  = false; // off by default
 let gridSizeInputVal = 5;
 let totalGridSquares = gridSizeInputVal * gridSizeInputVal;
 // get grid size
-const getGridSizeInputVal = e => { 
-    gridSizeInputVal = e.target.value;
-    totalGridSquares = e.target.value * e.target.value;
+const getGridSizeInputVal = e => {
+    if (e.target.value <= 100 && e.target.value >= 3) {
+        gridSizeInputVal = e.target.value;
+        totalGridSquares = e.target.value * e.target.value;
+        generateGridButton.textContent = "Generate";
+        generateGridButton.classList.add("activated");
+        generateGridButton.classList.remove("not-activated");
+    } else {
+        (e.target.value < 3) ? generateGridButton.textContent = "Too small!"
+        : generateGridButton.textContent = "Too large!";
+
+        generateGridButton.classList.add("not-activated");
+        generateGridButton.classList.remove("activated");
+    }
 }
 gridSizeInput.addEventListener("change", getGridSizeInputVal);
 
 
 const generateGrid = (squaresPerRow, totalSquareAmount) => {
-    for (let i = 0; i < totalSquareAmount; i++) {
-        const div = document.createElement("div");
-
-        gridContainer.style.gridTemplateRows = `repeat(${squaresPerRow}, 1fr)`;
-        gridContainer.style.gridTemplateColumns = `repeat(${squaresPerRow}, 1fr)`;
-
-        gridContainer.appendChild(div);
-    };
+    if (squaresPerRow <= 100) {
+        for (let i = 0; i < totalSquareAmount; i++) {
+            const div = document.createElement("div");
+    
+            gridContainer.style.gridTemplateRows = `repeat(${squaresPerRow}, 1fr)`;
+            gridContainer.style.gridTemplateColumns = `repeat(${squaresPerRow}, 1fr)`;
+    
+            gridContainer.appendChild(div);
+        };
+    }
 }
 
 
@@ -117,9 +130,10 @@ toggleDrawMethodButton.addEventListener("click", (e) => {
     toggleShowGrid(e);
 })
 
+// if you're looking at this function, don't worry i hate it too
 const toggleDrawingMethod = () => {
     const allGridSquares = document.querySelectorAll(".drawing-pad-container div");
-    if (!holdToDrawVal) {
+    if (holdToDrawVal == false) {
         allGridSquares.forEach(square => {
             square.addEventListener("mouseenter", hoverDrawingMethod);
         });
@@ -139,6 +153,18 @@ const toggleDrawingMethod = () => {
                         e.target.style.backgroundColor = "white";
                     }
                 })
+                square.addEventListener("click", e => {
+                    if (rainbowMode == false) {
+                        e.target.style.backgroundColor = colour;  
+                    } else {
+                        const [num1, num2, num3] = toggleRainbowMode();
+                        e.target.style.backgroundColor = `rgb(${num1}, ${num2}, ${num3})`;
+                    }
+
+                    if (eraserMode) {
+                        e.target.style.backgroundColor = "white";
+                    }
+                });
             });
         })
         gridContainer.addEventListener("mouseup", () => {
