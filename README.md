@@ -1,1 +1,1 @@
-LIVE: https://lollganz.github.io/etch-a-sketch/
+LIVE: https://ganznz.github.io/etch-a-sketch/
